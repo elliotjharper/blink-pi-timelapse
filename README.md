@@ -63,12 +63,27 @@
         - created the well documented file `/part-3/Dockerfile`
             - BIG GOTCHA, only the LAST CMD of a Dockerfile will be executed so if you need to run multiple commands you must create a script (think bash .sh etc..) and use CMD to execute that
         - compiled an image using that dockerfile
-            - `docker build -t multiple-python-hellos`
+            - `docker build -t multiple-python-hellos .`
         - ran the image multiple-python-hellos
             - `docker run -it --rm multiple-python-hellos`
 
-- 4. Build a python image (take on the task of installing python) and use it to run the same scripts
+- 3. BONUS
+    - Ran nodejs using the official nodejs team docker images
+        -  `docker run -it --rm  node:14-bullseye node -v`
 
+- XX. Build a python image (take on the task of installing python) and use it to run the same scripts
+    - no point...
+
+- 4. Setup the python script to make use of an env var and then pass that in whilst running it
+    - created a basic dockerfile (`/part4/dockerfile`) to build an image that starts with debian and just does some echoing to console using `/part4/main.sh`
+    - in the dockerfile created an environment variable with a default value
+        - `ENV TestVar "InitialValue"`
+    - if you just build and run that container the main.sh logs that initial value
+        - build: `docker build -t part-4 .`
+        - run: `docker run -it --rm part-4`
+    - however you can supply a different environment variable as you launch the container using command line arguments
+        - `docker run -it -e "TestVar=NewValue" --rm part-4`
+        - this overrides that env variable and the existing echo $TestVar uses that new value
 
 - 5. Build image on top of python image installing blinkpy and log to prove blinkpy installed
 
